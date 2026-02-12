@@ -6,6 +6,7 @@ import com.hieuduongmanh.secondbrain.entity.Tag
 import com.hieuduongmanh.secondbrain.exception.ResourceNotFoundException
 import com.hieuduongmanh.secondbrain.repository.TagRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 import java.util.*
 
@@ -28,6 +29,7 @@ class TagService(
         return tag.toDTO()
     }
 
+    @Transactional
     fun createTag(tagName: String): TagDTO {
         val existing = tagRepository.findByName(tagName)
         if (existing != null) {
@@ -44,5 +46,6 @@ class TagService(
         return tag.toDTO()
     }
 
+    @Transactional
     fun deleteTag(id: UUID) = tagRepository.deleteById(id)
 }

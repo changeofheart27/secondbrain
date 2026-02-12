@@ -37,8 +37,8 @@ class TagController(
         )
     }
 
-    @GetMapping("/{tagName}")
-    fun getTagByName(@PathVariable tagName: String): ApiResponse<TagDTO> {
+    @GetMapping("/name")
+    fun getTagByName(@RequestParam tagName: String): ApiResponse<TagDTO> {
         val tag = tagService.getTagByName(tagName = tagName)
         return ApiResponse(
             timestamp = Instant.now(),

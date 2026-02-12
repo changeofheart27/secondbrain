@@ -37,6 +37,17 @@ class NoteController(
         )
     }
 
+    @GetMapping("/tags/{tagId}")
+    fun getNotesByTagId(@PathVariable tagId: UUID): ApiResponse<List<NoteDTO>> {
+        val note = noteService.getNotesByTagId(tagId = tagId)
+        return ApiResponse(
+            timestamp = Instant.now(),
+            status = HttpStatus.OK.value(),
+            message = "Get Notes By Tag ID Successful",
+            data = note
+        )
+    }
+
     @PostMapping
     fun createNote(@Valid @RequestBody request: CreateNoteRequest): ApiResponse<NoteDTO> {
         val newNote = noteService.createNote(

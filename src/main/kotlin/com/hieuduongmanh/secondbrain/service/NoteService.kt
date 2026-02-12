@@ -1,17 +1,17 @@
 package com.hieuduongmanh.secondbrain.service
 
-import com.hieuduongmanh.secondbrain.exception.ResourceNotFoundException
 import com.hieuduongmanh.secondbrain.dto.NoteDTO
 import com.hieuduongmanh.secondbrain.dto.mapper.toDTO
-import com.hieuduongmanh.secondbrain.dto.mapper.toEntity
 import com.hieuduongmanh.secondbrain.dto.request.CreateNoteRequest
 import com.hieuduongmanh.secondbrain.entity.Note
 import com.hieuduongmanh.secondbrain.entity.NoteEvent
 import com.hieuduongmanh.secondbrain.entity.NoteEventType
+import com.hieuduongmanh.secondbrain.exception.ResourceNotFoundException
 import com.hieuduongmanh.secondbrain.repository.NoteEventRepository
 import com.hieuduongmanh.secondbrain.repository.NoteRepository
 import com.hieuduongmanh.secondbrain.repository.TagRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 import java.util.*
 
@@ -33,6 +33,7 @@ class NoteService(
     fun getNotesByTagId(tagId: UUID): List<NoteDTO> =
         noteRepository.findByTagsId(tagId).map { it.toDTO() }
 
+    @Transactional
     fun createNote(title: String?, content: String, tagName: String?): NoteDTO {
         val tag = tagRepository.findByName(tagName)
             ?: throw ResourceNotFoundException("Tag with name $tagName not found")
@@ -61,6 +62,7 @@ class NoteService(
         return saved.toDTO()
     }
 
+    @Transactional
     fun updateNote(noteId: UUID, request: CreateNoteRequest): NoteDTO {
         val note = noteRepository.findById(noteId).orElseThrow {
             ResourceNotFoundException("Note with id $noteId not found")
@@ -88,6 +90,7 @@ class NoteService(
         return updatedNote.toDTO()
     }
 
+    @Transactional
     fun deleteNote(noteId: UUID) {
         noteRepository.findById(noteId)
             ?: throw ResourceNotFoundException("Note with id $noteId not found")
@@ -95,6 +98,7 @@ class NoteService(
         noteRepository.deleteById(noteId)
     }
 
+    @Transactional
     fun pinNote(noteId: UUID): NoteDTO {
         val now = Instant.now()
         val note = noteRepository.findById(noteId).orElseThrow {
