@@ -1,5 +1,5 @@
 # SecondBrain
-***
+
 **SecondBrain** is a Personal Knowledge Manager where you can easily store and organize notes, tag them, and track associated events. This project helps you manage your personal knowledge base with powerful search capabilities, making it easier to find and track relevant information over time.
 
 ## Tech Stack

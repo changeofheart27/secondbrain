@@ -60,7 +60,7 @@ class TagController(
     }
 
     @DeleteMapping("/{id}")
-    fun deleteTag(@PathVariable id: UUID): ApiResponse<Nothing> {
+    fun deleteTag(@PathVariable id: UUID): ApiResponse<Unit> {
         tagService.deleteTag(id)
         return ApiResponse(
             timestamp = Instant.now(),

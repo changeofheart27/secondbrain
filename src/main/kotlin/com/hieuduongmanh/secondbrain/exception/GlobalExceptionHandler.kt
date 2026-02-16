@@ -15,8 +15,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handleResourceNotFoundException(
         ex: ResourceNotFoundException
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        val errorResponse = ApiResponse(
+    ): ResponseEntity<ApiResponse<Unit>> {
+        val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.NOT_FOUND.value(),
             message = "ResourceNotFoundException",
             data = null,
@@ -31,8 +31,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleMethodArgumentTypeMismatchException (
         ex: MethodArgumentTypeMismatchException
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        val errorResponse = ApiResponse(
+    ): ResponseEntity<ApiResponse<Unit>> {
+        val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
             message = "MethodArgumentTypeMismatchException",
             data = null,
@@ -47,8 +47,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(
         ex: MethodArgumentNotValidException
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        val errorResponse = ApiResponse(
+    ): ResponseEntity<ApiResponse<Unit>> {
+        val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
             message = "MethodArgumentNotValidException",
             data = null,
@@ -63,8 +63,8 @@ class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     fun handleIllegalArgumentException(
         ex: IllegalArgumentException
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        val errorResponse = ApiResponse(
+    ): ResponseEntity<ApiResponse<Unit>> {
+        val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
             message = "IllegalArgumentException",
             data = null,
@@ -77,8 +77,8 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception::class)
-    fun handleGenericException(ex: Exception): ResponseEntity<ApiResponse<Nothing>> {
-        val errorResponse = ApiResponse(
+    fun handleGenericException(ex: Exception): ResponseEntity<ApiResponse<Unit>> {
+        val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             message = "Exception",
             data = null,

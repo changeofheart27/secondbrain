@@ -75,7 +75,7 @@ class NoteController(
     }
 
     @DeleteMapping("/{id}")
-    fun deleteNote(@PathVariable id: UUID): ApiResponse<Nothing> {
+    fun deleteNote(@PathVariable id: UUID): ApiResponse<Unit> {
         noteService.deleteNote(noteId = id)
         return ApiResponse(
             timestamp = Instant.now(),

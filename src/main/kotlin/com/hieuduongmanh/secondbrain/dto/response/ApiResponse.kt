@@ -6,7 +6,7 @@ data class ApiResponse<T>(
     val timestamp: Instant = Instant.now(),
     val status: Int,
     val message: String,
-    val data: T?,
+    val data: T? = null,
     val error: ErrorDetails? = null,
 )
 
