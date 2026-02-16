@@ -64,7 +64,7 @@ class NoteController(
     }
 
     @PutMapping("/{noteId}")
-    fun updateNote(@PathVariable noteId: UUID, @RequestBody request: CreateNoteRequest): ApiResponse<NoteDTO> {
+    fun updateNote(@PathVariable noteId: UUID, @Valid @RequestBody request: CreateNoteRequest): ApiResponse<NoteDTO> {
         val updatedNote = noteService.updateNote(noteId, request)
         return ApiResponse(
             timestamp = Instant.now(),

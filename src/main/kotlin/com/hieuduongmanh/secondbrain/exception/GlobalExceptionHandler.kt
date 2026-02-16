@@ -18,27 +18,27 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ApiResponse<Unit>> {
         val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.NOT_FOUND.value(),
-            message = "ResourceNotFoundException",
+            message = "Resource not found",
             data = null,
             error = ErrorDetails(
                 code = "NOT_FOUND",
-                description = ex.message.toString()
+                description = ex.message ?: "The requested resource could not be found."
             )
         )
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun handleMethodArgumentTypeMismatchException (
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun handleMethodArgumentTypeMismatchException(
         ex: MethodArgumentTypeMismatchException
     ): ResponseEntity<ApiResponse<Unit>> {
         val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
-            message = "MethodArgumentTypeMismatchException",
+            message = "Invalid argument type",
             data = null,
             error = ErrorDetails(
                 code = "BAD_REQUEST",
-                description = ex.message.toString()
+                description = "The parameter '${ex.name}' of value '${ex.value}' could not be converted to type '${ex.requiredType?.name}'."
             )
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
@@ -50,27 +50,27 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ApiResponse<Unit>> {
         val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
-            message = "MethodArgumentNotValidException",
+            message = "Validation failed",
             data = null,
             error = ErrorDetails(
                 code = "BAD_REQUEST",
-                description = ex.message.toString()
+                description = "Validation failed for one or more fields."
             )
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(
         ex: IllegalArgumentException
     ): ResponseEntity<ApiResponse<Unit>> {
         val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.BAD_REQUEST.value(),
-            message = "IllegalArgumentException",
+            message = "Illegal argument",
             data = null,
             error = ErrorDetails(
                 code = "BAD_REQUEST",
-                description = ex.message.toString()
+                description = ex.message ?: "An illegal argument was provided."
             )
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
@@ -80,11 +80,11 @@ class GlobalExceptionHandler {
     fun handleGenericException(ex: Exception): ResponseEntity<ApiResponse<Unit>> {
         val errorResponse = ApiResponse<Unit>(
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            message = "Exception",
+            message = "Internal server error",
             data = null,
             error = ErrorDetails(
                 code = "INTERNAL_SERVER_ERROR",
-                description = ex.message.toString()
+                description = ex.message ?: "An unexpected error occurred."
             )
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
